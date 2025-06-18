@@ -1,13 +1,24 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import Menu from './Icons/Menu';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, authMessage, signInWithGithub, signOut } = useAuth();
 
+  const displayName = user?.user_metadata.user_name || user?.email || 'Guest';
+
+  const handleSignInPress = () => {
+    signInWithGithub();
+  };
+  const handleSignOutPress = () => {
+    signOut();
+  };
   return (
     <nav className="fixed top-0 w-full z-40 bg-[rgba(10,10,10,0.8)] background-blur-lg border-b border-gray-50 shadow-lg">
-      <div className="max-w-5xl mx-auto px-4 ">
+      {/* <div className="max-w-5xl mx-auto px-4 "> */}
+      <div className="w-screen mx-auto px-4 ">
         <div className="flex justify-between items-center h-16">
           <Link to={'/'} className="font-mono text-xl items-center text-white">
             ML<span className="text-purple-700">.development</span>
@@ -30,7 +41,33 @@ export const Navbar = () => {
               About
             </Link>
           </div>
-          {/* Menu Button */}
+          {/*Desktop Authentication Buttons*/}
+          <div className="hidden md:flex items-center">
+            {user !== null ? (
+              <div className="flex items-center space-x-4">
+                {user.user_metadata?.avatar_url && (
+                  <img className="rounded-full h-8 w-8" src={user.user_metadata?.avatar_url} alt="User Avatar" />
+                )}
+                <span className="text-gray-100 mr-4">Welcome, {displayName}</span>
+                <button
+                  onClick={handleSignOutPress}
+                  className="bg-amber-700 px-3 py-1 rounded text-gray-200 hover:text-white transition-colors"
+                >
+                  Sign out
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button
+                  onClick={handleSignInPress}
+                  className="bg-purple-400 px-3 py-1 rounded text-gray-200 hover:text-white"
+                >
+                  Sign in with Github
+                </button>
+              </div>
+            )}
+          </div>
+          {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-300 focus:outline-none">
               <svg
@@ -50,6 +87,7 @@ export const Navbar = () => {
           </div>
         </div>
       </div>
+
       {/* For Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-[rgba(10,10,10,0.8)]">
