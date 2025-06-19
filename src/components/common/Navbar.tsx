@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import Menu from './Icons/Menu';
-import { useAuth } from '../context/AuthContext';
+import Menu from '../Icons/Menu';
+import { useAuth } from '../../context/AuthContext';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
