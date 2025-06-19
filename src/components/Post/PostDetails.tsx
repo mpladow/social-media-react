@@ -6,6 +6,7 @@ import type { Post } from '../../models/Post';
 import PageHeading from '../common/PageHeading';
 import Avatar from '../common/Avatar';
 import LikeButton from './LikeButton';
+import CommentSection from './CommentSection';
 
 const fetchPostById = async (postId: number): Promise<Post> => {
   const { data, error } = await supabase.from('posts').select('*').eq('id', postId).single();
@@ -32,22 +33,27 @@ const PostDetails = ({ postId }: { postId: number }) => {
   return (
     <div>
       {/* // page header */}
-      <div className="flex flex-col w-screen max-w-5xl mx-auto justify-between mb-4 p-20 bg-gradient-to-br from-indigo-800/80 to-purple-800/80 rounded-2xl shadow-lg gap-4">
-        <div>{new Date(data?.created_at ?? '').toLocaleDateString()}</div>
-        <div>
-          <h1 className="text-6xl font-bold">{data?.title}</h1>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Avatar altTitle={data?.title ?? ''} imageUrl={data?.avatar_url} size={'medium'} />
-          <span className="font-bold">{data?.created_by ?? 'Anonymous'}</span>
+      <div className="flex items-center  mb-8 justify-between p-20 bg-gradient-to-br from-indigo-800/80 to-purple-800/80 rounded-2xl shadow-lg">
+        <div className="flex flex-col w-screen max-w-5xl mx-auto  gap-4">
+          <div>{new Date(data?.created_at ?? '').toLocaleDateString()}</div>
+          <div>
+            <h1 className="text-6xl font-bold">{data?.title}</h1>
+          </div>
+          <div className="flex items-center space-x-4">
+            <Avatar altTitle={data?.title ?? ''} imageUrl={data?.avatar_url} size={'medium'} />
+            <span className="font-bold">{data?.created_by ?? 'Anonymous'}</span>
+          </div>
         </div>
         <LikeButton postId={data?.id ?? 0} />
       </div>
       {/* // content */}
       <div>
-        <p>{data?.content}</p>
+        <p className="first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:font-bold first-line:tracking-widest">
+          {data?.content}
+        </p>
         <img src={data?.image_url} alt={data?.title} className="w-full rounded-[20px] object-cover h-100" />
       </div>
+      <CommentSection postId={0} />
     </div>
   );
 };

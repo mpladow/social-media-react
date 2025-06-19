@@ -9,7 +9,6 @@ interface PostItemProps {
   post: Post;
 }
 const PostItem = ({ post }: PostItemProps) => {
-  console.log('🚀 ~ PostItem ~ post:', post);
   return (
     <Link
       to={`/post/${post.id}`}

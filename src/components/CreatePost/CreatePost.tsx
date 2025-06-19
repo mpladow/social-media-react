@@ -69,9 +69,12 @@ const CreatePost = () => {
   const { user } = useAuth();
   const navivate = useNavigate();
 
-  const { mutate, isPending, isError, error } = useMutation({ mutationFn: createPost, onSuccess: (data) => {
-	navivate(`/post/${data.id}`);
-  } });
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: createPost,
+    onSuccess: (data) => {
+      navivate(`/post/${data.id}`);
+    },
+  });
 
   const onSubmit: SubmitHandler<CreatePostForm> = (data: CreatePostForm) => {
     // add user created data
@@ -161,6 +164,10 @@ const CreatePost = () => {
               </div>
             </div>
           )}
+          {/* <input
+            type="file"
+            className="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500 ..."
+          /> */}
           <input ref={fileRef} onChange={handleFileChange} type="file" accept="image/*" className="hidden" />
         </div>
         {errors.image && <span className="text-red-500">Content is required</span>}
