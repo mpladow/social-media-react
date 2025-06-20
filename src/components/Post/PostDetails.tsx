@@ -73,7 +73,11 @@ const PostDetails = ({ postId }: { postId: number }) => {
         <p className="first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:font-bold first-line:tracking-widest"></p>
         {/* <img src={data?.image_url} alt={data?.title} className="w-full rounded-[20px] object-cover h-100" /> */}
       </div>
-      <CommentSection postId={0} />
+      <div className="w-screen max-w-5xl mx-auto mt-8">
+        <label className="text-xl font-semibold mt-4 mb-4">Comments</label>
+
+        <CommentSection postId={postId} />
+      </div>
     </div>
   );
 };

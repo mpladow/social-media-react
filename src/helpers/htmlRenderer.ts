@@ -30,7 +30,6 @@ export const editorJStoHTML = (data: OutputBlockData) => {
 				`<blockquote className='border-l-2 border-purple-400  ml-4 p-4 mt-4'>${data.data.text} - <cite>${data.data.caption}</cite></blockquote>`
 			);
 		case 'image':
-			console.log('🚀 ~ handleEditorJSRendering ~ data.data.file:', data.data);
 			return parse(
 				`<img className="rounded-lg" src="${data.data.file.url}" alt="${data.data.caption}" />${data.data.caption ? `<figcaption>${data.data.caption}</figcaption>` : ''
 				}`

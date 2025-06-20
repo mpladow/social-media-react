@@ -51,7 +51,7 @@ export const Navbar = () => {
                 <span className="text-gray-100 mr-4">Welcome, {displayName}</span>
                 <button
                   onClick={handleSignOutPress}
-                  className="bg-amber-700 px-3 py-1 rounded text-gray-200 hover:text-white transition-colors"
+                  className="bg-amber-700 px-3 py-1 rounded text-gray-200 hover:text-white transition-colors cursor-pointer"
                 >
                   Sign out
                 </button>
@@ -60,7 +60,7 @@ export const Navbar = () => {
               <div>
                 <button
                   onClick={handleSignInPress}
-                  className="bg-purple-400 px-3 py-1 rounded text-gray-200 hover:text-white"
+                  className="bg-purple-400 px-3 py-1 rounded text-gray-200 hover:text-white cursor-pointer"
                 >
                   Sign in with Github
                 </button>
@@ -69,7 +69,7 @@ export const Navbar = () => {
           </div>
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-300 focus:outline-none">
+            <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-300 focus:outline-none cursor-pointer">
               <svg
                 className="w-6 h-6"
                 fill="none"
