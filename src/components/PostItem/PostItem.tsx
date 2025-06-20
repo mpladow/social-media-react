@@ -4,11 +4,28 @@ import { Link } from 'react-router';
 import Avatar from '../common/Avatar';
 import PostItemFooter from './components/PostItemFooter';
 import LikeButton from '../Post/LikeButton';
+import { editorJStoHTML } from '../../helpers/htmlRenderer';
+import parse from 'html-react-parser';
+import type { OutputData } from '@editorjs/editorjs';
 
 interface PostItemProps {
   post: Post;
 }
 const PostItem = ({ post }: PostItemProps) => {
+  const handleRenderContent = () => {
+    if (post && post.content) {
+      try {
+        const content: OutputData = JSON.parse(post.content);
+        const firstParagraph = content.blocks?.find((x) => x.type === 'paragraph')?.data?.text || '';
+        console.log('🚀 ~ handleRenderContent ~ firstParagraph:', firstParagraph);
+        if (firstParagraph)
+          // If the first paragraph exists, render it directly
+          return <p className="line-clamp-4">{firstParagraph}</p>;
+      } catch (error) {
+        return parse(`<p className="line-clamp-4">${post.content}</p>`);
+      }
+    }
+  };
   return (
     <Link
       to={`/post/${post.id}`}
@@ -24,7 +41,8 @@ const PostItem = ({ post }: PostItemProps) => {
             </div>
           </div>
           <div className="flex-col justify-between">
-            <p className="line-clamp-4">{post.content}</p>
+            {/* <p className="line-clamp-4">{post.content}</p> */}
+            {handleRenderContent()}
           </div>
         </div>
         <PostItemFooter post={post} />

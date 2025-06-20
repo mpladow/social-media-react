@@ -5,8 +5,6 @@ import { useRef, type ChangeEvent } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import type { Post } from '../../models/Post';
 import { useNavigate } from 'react-router';
-import Editor from '../common/Editor/Editor';
-import type { OutputData } from '@editorjs/editorjs';
 
 interface CreatePostSchema {
   title: string;
@@ -25,6 +23,8 @@ interface CreatePostForm {
 }
 
 const createPost = async (post: CreatePostForm) => {
+  console.log('🚀 ~ createPost ~ post:', post);
+
   // from = the table you want to insert into
   // data = success
   // 1. INSERT IMAGE
@@ -57,7 +57,7 @@ const createPost = async (post: CreatePostForm) => {
   return data as Post;
 };
 
-const CreatePost = () => {
+const CreatePostAlt = () => {
   const {
     register,
     setValue,
@@ -77,7 +77,6 @@ const CreatePost = () => {
   });
 
   const onSubmit: SubmitHandler<CreatePostForm> = (data: CreatePostForm) => {
-    console.log('🚀 ~ CreatePost ~ data:', data);
     // add user created data
     data.created_by = user?.user_metadata.preferred_username || user?.user_metadata.email || 'Anonymous';
     data.avatar_url = user?.user_metadata.avatar_url || null;
@@ -87,10 +86,6 @@ const CreatePost = () => {
   };
   const onError = (error: any) => {
     console.error('Error creating post:', error);
-  };
-
-  const handleEditorDataChange = (data: OutputData) => {
-    setValue('content', JSON.stringify(data));
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -126,38 +121,57 @@ const CreatePost = () => {
       </div>
       <div className={'flex flex-col'}>
         <label className="text-lg font-semibold mb-2">Content</label>
-        <Editor data={watch('content')} onChange={handleEditorDataChange} editorBlock="editorjs" />
-        {/* <textarea
+        <textarea
           className="w-full border border-gray-300 p-2 rounded bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
           {...register('content', { required: true })}
           id="content"
           rows={5}
-        /> */}
+        />
         {errors.content && <span className="text-red-500">Content is required</span>}
       </div>
       <div className={'flex flex-col'}>
-        <label className="text-lg font-semibold mb-2">Preview Image</label>
-        {watch('image') && (
-          <div className="w-auto self-start space-x-2 mb-2 relative">
-            <div className="absolute top-2 right-0">
+        <label className="text-lg font-semibold mb-2">Upload Image</label>
+        <div className={'flex flex-col border border-gray-300 p-2 rounded'}>
+          {watch('image') == null ? (
+            <div className="flex flex-col items-center justify-centerspace-y-2">
               <button
+                className="bg-blue-500 text-white p-2 rounded cursor-pointer"
                 type="button"
-                onClick={handleRemoveFileClick}
-                className="bg-red-500 w-6 h-6 rounded-full text-white flex items-center justify-center cursor-pointer"
+                onClick={handleFileInputButtonClick}
               >
-                X
+                Select file
               </button>
             </div>
-            <img src={URL.createObjectURL(watch('image'))} alt="Selected" className="h-32 w-32 object-contain" />
-          </div>
-        )}
-        <input
-          onChange={handleFileChange}
-          type="file"
-          className="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500 ..."
-        />
+          ) : (
+            <div className="flex flex-col items-baseline space-x-2">
+              <img src={URL.createObjectURL(watch('image'))} alt="Selected" className="h-32 w-32 object-contain" />
+              <span className="py-3">{watch('image')?.name}</span>
+              <div className="flex space-x-2 align-middle justify-center">
+                <button
+                  className="bg-blue-500 text-white p-2 rounded cursor-pointer"
+                  type="button"
+                  onClick={handleFileInputButtonClick}
+                >
+                  Change file
+                </button>
+                <button
+                  className="bg-amber-600 text-white p-2 rounded cursor-pointer"
+                  type="button"
+                  onClick={handleRemoveFileClick}
+                >
+                  Remove File
+                </button>
+              </div>
+            </div>
+          )}
+          {/* <input
+            type="file"
+            className="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500 ..."
+          /> */}
+          <input ref={fileRef} onChange={handleFileChange} type="file" accept="image/*" className="hidden" />
+        </div>
+        {errors.image && <span className="text-red-500">Content is required</span>}
       </div>
-
       {error && <p className="text text-red-500">{error.message}</p>}
       {isPending ? (
         <p className="text text-blue-500 pt-3">Creating post...</p>
@@ -170,4 +184,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreatePostAlt;

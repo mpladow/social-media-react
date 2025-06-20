@@ -1,12 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import { useParams } from 'react-router';
 import { supabase } from '../../supabase-client';
 import type { Post } from '../../models/Post';
-import PageHeading from '../common/PageHeading';
 import Avatar from '../common/Avatar';
 import LikeButton from './LikeButton';
 import CommentSection from './CommentSection';
+import type { OutputBlockData, OutputData } from '@editorjs/editorjs';
+import { editorJStoHTML } from '../../helpers/htmlRenderer';
 
 const fetchPostById = async (postId: number): Promise<Post> => {
   const { data, error } = await supabase.from('posts').select('*').eq('id', postId).single();
@@ -14,6 +13,10 @@ const fetchPostById = async (postId: number): Promise<Post> => {
   if (error) throw new Error(error.message);
 
   return data as Post;
+};
+
+const handleEditorJSRendering = (data: OutputBlockData) => {
+  return editorJStoHTML(data);
 };
 
 const PostDetails = ({ postId }: { postId: number }) => {
@@ -29,6 +32,24 @@ const PostDetails = ({ postId }: { postId: number }) => {
   if (error) {
     return <div className="text-center text-red-500">Error: {error?.message}</div>;
   }
+
+  const renderContent = () => {
+    if (data && data.content) {
+      try {
+        const content: OutputData = JSON.parse(data.content);
+        const renderedBlocks = content.blocks.map((block, index) => {
+          return <div key={index}>{handleEditorJSRendering(block)}</div>;
+        });
+        return renderedBlocks;
+      } catch {
+        return data.content;
+      }
+      // console.log('🚀 ~ renderContent ~ content:', content);
+      return '';
+    } else {
+      return '';
+    }
+  };
 
   return (
     <div>
@@ -48,10 +69,9 @@ const PostDetails = ({ postId }: { postId: number }) => {
       </div>
       {/* // content */}
       <div>
-        <p className="first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:font-bold first-line:tracking-widest">
-          {data?.content}
-        </p>
-        <img src={data?.image_url} alt={data?.title} className="w-full rounded-[20px] object-cover h-100" />
+        {renderContent()}
+        <p className="first-letter:text-7xl first-letter:float-left first-letter:mr-3 first-letter:font-bold first-line:tracking-widest"></p>
+        {/* <img src={data?.image_url} alt={data?.title} className="w-full rounded-[20px] object-cover h-100" /> */}
       </div>
       <CommentSection postId={0} />
     </div>

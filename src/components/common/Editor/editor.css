@@ -1,0 +1,79 @@
+/* @import "tailwindcss/preflight"; */
+
+
+#editorjs-container {
+  background-color: #f9f9f9;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+}
+
+.ce-toolbar__content,
+.ce-block__content {
+  max-width: unset;
+  /* background-color: gray; */
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.editorjs-codeFlask_Wrapper .editorjs-codeFlask_LangDisplay {
+  max-width: unset;
+  height: unset !important;
+}
+input.ce-inline-tool-input {
+  max-width: unset;
+  width: 100% !important;
+}
+
+/* .editor button {
+  border: none;
+  padding: 10px 20px;
+  background: #2cd3ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+} */
+/* .cdx-block {
+  background-color: pink;
+} */
+ a.ce-paragraph {
+  color: #2cd3ff;
+  text-decoration: none;
+}
+h1.ce-header {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 10px;
+  /* color: #333; */
+  line-height: 1.5;
+}
+h2.ce-header {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+h3.ce-header {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+h4.ce-header {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.ce-header {
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.ce-paragraph {
+  font-size: 16px;
+  line-height: 1.5;
+}
+ol.cdx-list,
+ul.cdx-list {
+  color: #333;
+}

@@ -18,7 +18,6 @@ const PostList = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  console.log('🚀 ~ PostList ~ data:', data);
   return (
     <div className="flex flex-wrap max-w-5xl mx-auto gap-6 justify-center">
       {data?.map((post, index) => (
