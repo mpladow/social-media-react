@@ -1,4 +1,3 @@
-import React from 'react';
 import CreatePost from '../components/CreatePost/CreatePost';
 import PageHeading from '../components/common/PageHeading';
 

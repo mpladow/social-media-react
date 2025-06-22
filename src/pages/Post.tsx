@@ -1,5 +1,3 @@
-import React from 'react';
-import PageHeading from '../components/common/PageHeading';
 import PostDetails from '../components/Post/PostDetails';
 import { useParams } from 'react-router';
 

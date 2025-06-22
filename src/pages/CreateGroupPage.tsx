@@ -1,4 +1,3 @@
-import React from 'react';
 import PageHeading from '../components/common/PageHeading';
 import CreateGroup from '../components/CreateGroup/CreateGroup';
 

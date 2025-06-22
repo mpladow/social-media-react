@@ -15,17 +15,22 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [authMessage, setAuthMessage] = useState('');
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user || null);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data: { session } }) => {
+        setUser(session?.user || null);
+      })
+      .catch((error) => {
+        setAuthMessage(`Error fetching session: ${error.message}`);
+      });
 
     // when supabase auth state changes, we want to update the user state
     const { data: listener } = supabase.auth.onAuthStateChange((_, session) => {
       setUser(session?.user || null);
     });
-	 return () => {
-		listener.subscription.unsubscribe();
-	 }
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   const signInWithGithub = async () => {

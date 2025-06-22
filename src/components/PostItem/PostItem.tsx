@@ -1,10 +1,6 @@
-import React from 'react';
 import type { Post } from '../../models/Post';
 import { Link } from 'react-router';
-import Avatar from '../common/Avatar';
 import PostItemFooter from './components/PostItemFooter';
-import LikeButton from '../Post/LikeButton';
-import { editorJStoHTML } from '../../helpers/htmlRenderer';
 import parse from 'html-react-parser';
 import type { OutputData } from '@editorjs/editorjs';
 import { BsChatFill } from 'react-icons/bs';

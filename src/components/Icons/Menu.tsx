@@ -1,5 +1,4 @@
-
-const Menu = (props) => (
+const Menu = (props: any) => (
   <svg
     id="Capa_1"
     xmlns="http://www.w3.org/2000/svg"
