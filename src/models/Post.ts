@@ -4,6 +4,8 @@ export interface Post {
 	title: string;
 	content: string;
 	image_url?: string; // Optional field for image URL
-	created_by:string;
+	created_by: string;
 	avatar_url?: string; // Optional field for avatar URL
+	comment_count?: number;
+	like_count?: number;
 }

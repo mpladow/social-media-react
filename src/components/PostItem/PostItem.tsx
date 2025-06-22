@@ -7,6 +7,8 @@ import LikeButton from '../Post/LikeButton';
 import { editorJStoHTML } from '../../helpers/htmlRenderer';
 import parse from 'html-react-parser';
 import type { OutputData } from '@editorjs/editorjs';
+import { BsChatFill } from 'react-icons/bs';
+import { IoIosThumbsUp } from 'react-icons/io';
 
 interface PostItemProps {
   post: Post;
@@ -17,7 +19,6 @@ const PostItem = ({ post }: PostItemProps) => {
       try {
         const content: OutputData = JSON.parse(post.content);
         const firstParagraph = content.blocks?.find((x) => x.type === 'paragraph')?.data?.text || '';
-        console.log('🚀 ~ handleRenderContent ~ firstParagraph:', firstParagraph);
         if (firstParagraph)
           // If the first paragraph exists, render it directly
           return <p className="line-clamp-4">{firstParagraph}</p>;
@@ -29,7 +30,7 @@ const PostItem = ({ post }: PostItemProps) => {
   return (
     <Link
       to={`/post/${post.id}`}
-      className="flex h-full z-10 w-full xl:w-120 border border-gray-500 bg-gradient-to-br from-gray-800 to-gray-00 blur-none transition duration-300 hover:scale-105 rounded-2xl flex-col p-4 shadow-xl hover:shadow-indigo-950/50 cursor-pointer"
+      className="flex h-full z-10 w-full xl:w-120 border border-gray-500 bg-gradient-to-b from-violet-800/20 to-gray-800 blur-none transition duration-300 hover:scale-101 rounded-2xl flex-col p-4 shadow-xl hover:shadow-indigo-950/50 cursor-pointer"
     >
       {/* HEADING - TODO - pull into seperate component */}
       <div className="flex flex-1 flex-col gap-4 mb-4">
@@ -46,7 +47,16 @@ const PostItem = ({ post }: PostItemProps) => {
           </div>
         </div>
         <PostItemFooter post={post} />
-        <LikeButton postId={post.id} cosmeticOnly />
+        <div className="flex spacing-4 gap-4">
+          <div className="flex items-center space-x-1">
+            <BsChatFill />
+            <span className="text-gray-400">{post.comment_count} Comments</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <IoIosThumbsUp />
+            <span className="text-gray-400">{post.like_count} Likes</span>
+          </div>
+        </div>
       </div>
     </Link>
   );

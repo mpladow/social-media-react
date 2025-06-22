@@ -7,6 +7,7 @@ import type { Post } from '../../models/Post';
 import { useNavigate } from 'react-router';
 import Editor from '../common/Editor/Editor';
 import type { OutputData } from '@editorjs/editorjs';
+import Button from '../common/Button';
 
 interface CreatePostSchema {
   title: string;
@@ -112,7 +113,7 @@ const CreatePost = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4">
       <div className={'flex flex-col'}>
         <label className="text-lg font-semibold mb-2">Title</label>
         <input
@@ -162,9 +163,9 @@ const CreatePost = () => {
       {isPending ? (
         <p className="text text-blue-500 pt-3">Creating post...</p>
       ) : (
-        <button disabled={isPending} className="bg-purple-500 text-white p-2 rounded cursor-pointer my-3" type="submit">
-          <span>{isPending ? 'Creating Post...' : 'Create Post'}</span>
-        </button>
+        <Button type={'submit'} colorClass={'primary'} sizeClass={'medium'}>
+          {isPending ? 'Creating Post...' : 'Create Post'}
+        </Button>
       )}
     </form>
   );

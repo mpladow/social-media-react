@@ -5,7 +5,11 @@ import { supabase } from '../../supabase-client';
 import PostItem from '../PostItem/PostItem';
 
 const fetchPosts = async (): Promise<Post[]> => {
-  const { data, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false });
+  //   const { data, error } = await supabase.from('posts').select('*').order('created_at', { ascending: false });
+  const { data, error } = await supabase
+    .rpc('get_posts_with_counts')
+    .select('*')
+    .order('created_at', { ascending: false });
   if (error) throw new Error(error.message);
   return data;
 };
@@ -19,7 +23,7 @@ const PostList = () => {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div className="flex flex-wrap max-w-5xl mx-auto gap-6 justify-center">
+    <div className="flex flex-wrap max-w-5xl mx-auto gap-6">
       {data?.map((post, index) => (
         <PostItem post={post} key={index} />
       ))}

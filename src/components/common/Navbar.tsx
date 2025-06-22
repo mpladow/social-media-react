@@ -31,11 +31,11 @@ export const Navbar = () => {
             <Link to={'/create'} className="text-gray-200 hover:text-white transition-colors">
               Create Post
             </Link>
-            <Link to={'/communities'} className="text-gray-200 hover:text-white transition-colors">
-              Communities
+            <Link to={'/groups'} className="text-gray-200 hover:text-white transition-colors">
+              Groups
             </Link>
-            <Link to={'/community/create'} className="text-gray-200 hover:text-white transition-colors">
-              Create Community
+            <Link to={'/groups/create'} className="text-gray-200 hover:text-white transition-colors">
+              Create Group
             </Link>
             <Link to={'/about'} className="text-gray-200 hover:text-white transition-colors">
               About
@@ -68,7 +68,7 @@ export const Navbar = () => {
             )}
           </div>
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden duration-300 ease-in-out">
             <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-300 focus:outline-none cursor-pointer">
               <svg
                 className="w-6 h-6"
@@ -89,27 +89,31 @@ export const Navbar = () => {
       </div>
 
       {/* For Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-[rgba(10,10,10,0.8)]">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link to={'/'} className="block text-gray-200 hover:text-white transition-colors">
-              Home
-            </Link>
-            <Link to={'/create'} className="block text-gray-200 hover:text-white transition-colors">
-              Create Post
-            </Link>
-            <Link to={'/communities'} className="block text-gray-200 hover:text-white transition-colors">
-              Communities
-            </Link>
-            <Link to={'/community/create'} className="block text-gray-200 hover:text-white transition-colors">
-              Create Community
-            </Link>
-            <Link to={'/about'} className="block text-gray-200 hover:text-white transition-colors">
-              About
-            </Link>
-          </div>
+      <div
+        className={`md:hidden ${
+          menuOpen
+            ? 'h-auto opacity-100 transition duration-300 ease-in-out '
+            : ' overflow-hidden h-0  opacity-0 transition duration-300 ease-in-out '
+        } bg-[rgba(10,10,10,0.8)]`}
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <Link to={'/'} className="block text-gray-200 hover:text-white transition-colors">
+            Home
+          </Link>
+          <Link to={'/create'} className="block text-gray-200 hover:text-white transition-colors">
+            Create Post
+          </Link>
+          <Link to={'/groups'} className="block text-gray-200 hover:text-white transition-colors">
+            Groups
+          </Link>
+          <Link to={'/groups/create'} className="block text-gray-200 hover:text-white transition-colors">
+            Create Group
+          </Link>
+          <Link to={'/about'} className="block text-gray-200 hover:text-white transition-colors">
+            About
+          </Link>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
