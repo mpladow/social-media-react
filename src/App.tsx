@@ -17,7 +17,7 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
           <Route path="/groups/create" element={<CreateGroupPage />} />
           <Route path="/groups" element={<GroupsPage />} />
-			 <Route path='/group/:id' element={<GroupPage/>}
+          <Route path="/group/:id" element={<GroupPage />} />
         </Routes>
       </div>
     </div>
