@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import Button from '../common/Button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../../supabase-client';
-import type { GroupSchema } from '../../models/schema/Group';
 import Label from '../common/Label';
 import { useNavigate } from 'react-router';
 

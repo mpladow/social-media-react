@@ -1,9 +1,9 @@
-import type { CommentMaybeWithChildren, CreateCommentForm, CreateReplySchema } from './CommentSection';
+import type { CommentMaybeWithChildren, CreateReplySchema } from './CommentSection';
 import Avatar from '../common/Avatar';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
-import { createComment, createReply } from '../../api/comments';
+import { createReply } from '../../api/comments';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaChevronDown } from 'react-icons/fa6';
 import { isToday } from '../../helpers/dates';

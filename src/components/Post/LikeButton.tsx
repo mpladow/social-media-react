@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useMemo } from 'react';
 import { IoIosThumbsUp, IoIosThumbsDown } from 'react-icons/io';
 import { supabase } from '../../supabase-client';
 import type { CreateVoteSchema, VoteSchema } from '../../models/schema/Vote';
@@ -59,7 +58,6 @@ const fetchVotesForPost = async (postId: number): Promise<VoteSchema[]> => {
 };
 
 const LikeButton = ({ postId, cosmeticOnly }: LikeButtonProps) => {
-  const REFRESH_INTERVAL = 60000;
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const {

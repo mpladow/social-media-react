@@ -1,6 +1,5 @@
-import React from 'react';
 import PageHeading from '../components/common/PageHeading';
-import GroupList from '../components/Group/GroupList';
+import GroupList from '../components/Groups/GroupList';
 
 const GroupsPage = () => {
   return (

@@ -1,10 +1,8 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '../../supabase-client';
 import type { CommentSchema } from '../../models/schema/Comment';
-import Avatar from '../common/Avatar';
 import CommentItem from './CommentItem';
 import { createComment, fetchComments } from '../../api/comments';
 

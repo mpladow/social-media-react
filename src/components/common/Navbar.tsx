@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import Menu from '../Icons/Menu';
 import { useAuth } from '../../context/AuthContext';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, authMessage, signInWithGithub, signOut } = useAuth();
+  const { user, signInWithGithub, signOut } = useAuth();
 
   const displayName = user?.user_metadata.user_name || user?.email || 'Guest';
 

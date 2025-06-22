@@ -1,7 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { supabase } from '../../supabase-client';
-import { useRef, type ChangeEvent } from 'react';
+import { type ChangeEvent } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import type { Post } from '../../models/Post';
 import { useNavigate } from 'react-router';
@@ -26,7 +26,7 @@ interface CreatePostForm {
   image?: File; // Optional field for image URL
   avatar_url?: string;
   created_by: string;
-  group_id?: string
+  group_id?: string;
 }
 
 const createPost = async (post: CreatePostForm) => {
@@ -51,7 +51,7 @@ const createPost = async (post: CreatePostForm) => {
     image_url: postImageData.publicUrl ?? undefined,
     created_by: post.created_by,
     avatar_url: post.avatar_url ?? undefined, // Optional field for avatar URL
-	 group_id: post.group_id ?? undefined, // Optional field for group ID
+    group_id: post.group_id ?? undefined, // Optional field for group ID
   };
 
   // 3. INSERT POST DATA
@@ -69,16 +69,15 @@ const CreatePost = () => {
     setValue,
     watch,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<CreatePostForm>();
-  const fileRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   //   const { data, error } = await supabase.from('groups').select('*').order('name', { ascending: true });
   const { groups } = useGroupsQuery();
 
-  const { mutate, isPending, isError, error } = useMutation({
+  const { mutate, isPending, error } = useMutation({
     mutationFn: createPost,
     onSuccess: (data) => {
       navigate(`/post/${data.id}`);

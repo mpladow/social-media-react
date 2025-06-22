@@ -1,11 +1,12 @@
-import React from 'react';
+import PageHeading from '../components/common/PageHeading';
 
 const GroupPage = () => {
-	return (
-		<div>
-			<GroupPage />
-		</div>
-	);
+  return (
+    <div>
+      <PageHeading title={''}></PageHeading>
+      <GroupPage />
+    </div>
+  );
 };
 
 export default GroupPage;

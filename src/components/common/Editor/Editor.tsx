@@ -1,6 +1,5 @@
 import EditorJS, { type BlockToolConstructable, type OutputData, type ToolSettings } from '@editorjs/editorjs';
 import Header from '@editorjs/header';
-import List from '@editorjs/list';
 import Quote from '@editorjs/quote';
 import Paragraph from '@editorjs/paragraph';
 import { memo, useEffect, useRef } from 'react';
@@ -26,7 +25,7 @@ const Editor = ({
     // validate photo size
     const filePath = `post/${Date.now()}-${file.name}`;
 
-    const { data, error } = await supabase.storage.from('post-images').upload(filePath, file, { cacheControl: '3600' });
+    const { error } = await supabase.storage.from('post-images').upload(filePath, file, { cacheControl: '3600' });
     if (error) {
       throw new Error(error.message);
     }
@@ -101,7 +100,7 @@ const Editor = ({
         onReady: () => {
           console.log('Editor.js is ready');
         },
-        async onChange(api, e) {
+        async onChange(api) {
           const data = await api.saver.save();
           onChange(data);
         },
