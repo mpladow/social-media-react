@@ -1,23 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '../../supabase-client';
-import type { GroupSchema } from '../../models/schema/Group';
-import { Link } from 'react-router';
 
-const fetchGroups = async (): Promise<GroupSchema[]> => {
-  //   const { data, error } = await supabase.from('groups').select('*').order('name', { ascending: true });
-  const { data, error } = await supabase
-    .rpc('get_posts_count_in_communities')
-    .select('*')
-    .order('name', { ascending: true });
-  if (error) {
-    throw new Error(error.message);
-  }
-  return data;
-};
+import { Link } from 'react-router';
+import { useGroupsQuery } from '../../hooks/useGroupsQuery';
+
+
 
 const GroupList = () => {
-  const { data, error, isLoading } = useQuery({ queryKey: ['groups'], queryFn: fetchGroups });
-  console.log('🚀 ~ GroupList ~ data:', data);
+	const { groups, error, isLoading } = useGroupsQuery();
+  
 
   if (isLoading) {
     return <div className="text-center text-gray-500">Loading...</div>;
@@ -29,7 +18,7 @@ const GroupList = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {data!.map((group, index) => (
+      {groups!.map((group, index) => (
         <Link
           to={`/groups/${group.id}`}
           key={index}

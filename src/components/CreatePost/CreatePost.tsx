@@ -1,5 +1,5 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { supabase } from '../../supabase-client';
 import { useRef, type ChangeEvent } from 'react';
 import { useAuth } from '../../context/AuthContext';
@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router';
 import Editor from '../common/Editor/Editor';
 import type { OutputData } from '@editorjs/editorjs';
 import Button from '../common/Button';
+import { useGroupsQuery } from '../../hooks/useGroupsQuery';
+import Label from '../common/Label';
 
 interface CreatePostSchema {
   title: string;
@@ -15,6 +17,7 @@ interface CreatePostSchema {
   image_url?: string; // Optional field for image URL
   avatar_url?: string;
   created_by: string;
+  group_id?: string; // Optional field for group ID
 }
 
 interface CreatePostForm {
@@ -23,6 +26,7 @@ interface CreatePostForm {
   image?: File; // Optional field for image URL
   avatar_url?: string;
   created_by: string;
+  group_id?: string
 }
 
 const createPost = async (post: CreatePostForm) => {
@@ -47,6 +51,7 @@ const createPost = async (post: CreatePostForm) => {
     image_url: postImageData.publicUrl ?? undefined,
     created_by: post.created_by,
     avatar_url: post.avatar_url ?? undefined, // Optional field for avatar URL
+	 group_id: post.group_id ?? undefined, // Optional field for group ID
   };
 
   // 3. INSERT POST DATA
@@ -68,17 +73,19 @@ const CreatePost = () => {
   } = useForm<CreatePostForm>();
   const fileRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
-  const navivate = useNavigate();
+  const navigate = useNavigate();
+
+  //   const { data, error } = await supabase.from('groups').select('*').order('name', { ascending: true });
+  const { groups } = useGroupsQuery();
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createPost,
     onSuccess: (data) => {
-      navivate(`/post/${data.id}`);
+      navigate(`/post/${data.id}`);
     },
   });
 
   const onSubmit: SubmitHandler<CreatePostForm> = (data: CreatePostForm) => {
-    console.log('🚀 ~ CreatePost ~ data:', data);
     // add user created data
     data.created_by = user?.user_metadata.preferred_username || user?.user_metadata.email || 'Anonymous';
     data.avatar_url = user?.user_metadata.avatar_url || null;
@@ -103,11 +110,11 @@ const CreatePost = () => {
     }
   };
 
-  const handleFileInputButtonClick = () => {
-    if (fileRef.current) {
-      fileRef.current.click();
-    }
-  };
+  //   const handleFileInputButtonClick = () => {
+  //     if (fileRef.current) {
+  //       fileRef.current.click();
+  //     }
+  //   };
   const handleRemoveFileClick = () => {
     setValue('image', undefined);
   };
@@ -149,7 +156,7 @@ const CreatePost = () => {
                 X
               </button>
             </div>
-            <img src={URL.createObjectURL(watch('image'))} alt="Selected" className="h-32 w-32 object-contain" />
+            <img src={URL.createObjectURL(watch('image')!)} alt="Selected" className="h-32 w-32 object-contain" />
           </div>
         )}
         <input
@@ -157,6 +164,23 @@ const CreatePost = () => {
           type="file"
           className="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500 ..."
         />
+      </div>
+      <div>
+        <Label>Group</Label>
+        <select
+          className="w-full border border-gray-300 p-2 rounded bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
+          {...register('group_id')}
+          defaultValue=""
+        >
+          <option className="text-gray-400" value="">
+            -- Select a group --
+          </option>
+          {groups?.map((group) => (
+            <option className="text-gray-400" key={group.id} value={group.id}>
+              {group.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       {error && <p className="text text-red-500">{error.message}</p>}

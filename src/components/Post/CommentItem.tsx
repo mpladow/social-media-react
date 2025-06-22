@@ -45,7 +45,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
   const isChild = comment.parent_comment_id !== null;
 
   const transformDate = () => {
-    const transformed = new Date(comment.created_at);
+    const transformed = new Date(comment.created_at!);
     if (isToday(transformed)) {
       return 'Today';
     }
@@ -58,7 +58,7 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
             <Avatar altTitle={comment.author ?? ''} imageUrl={comment.avatar_url} size={'small'} />
             <div className="font-semibold">{comment.author}</div>{' '}
             <span className="text-xs items-center text-gray-400">
-              {new Date(comment.created_at).toLocaleTimeString()} {transformDate()}
+              {new Date(comment.created_at!).toLocaleTimeString()} {transformDate()}
             </span>
           </div>
           <div className="text-gray-300">{comment.content}</div>

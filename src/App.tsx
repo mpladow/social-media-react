@@ -5,6 +5,7 @@ import CreatePostPage from './pages/CreatePostPage';
 import Post from './pages/Post';
 import CreateGroupPage from './pages/CreateGroupPage';
 import GroupsPage from './pages/GroupsPage';
+import GroupPage from './pages/GroupPage';
 function App() {
   return (
     <div className="min-h-screen bg-gray-750 bg-gradient-to-b from-gray-800 to-black text-gray-100 transition-opacity duration-700 pt-20">
@@ -16,6 +17,7 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
           <Route path="/groups/create" element={<CreateGroupPage />} />
           <Route path="/groups" element={<GroupsPage />} />
+			 <Route path='/group/:id' element={<GroupPage/>}
         </Routes>
       </div>
     </div>
