@@ -23,7 +23,7 @@ const Editor = ({
   const handleImageUpload = async (file: File): Promise<any> => {
     console.log('🚀 ~ handleImageUpload ~ file:', file);
     // validate photo size
-    const filePath = `post/${Date.now()}-${file.name}`;
+    const filePath = `${Date.now()}-${file.name}`;
 
     const { error } = await supabase.storage.from('post-images').upload(filePath, file, { cacheControl: '3600' });
     if (error) {
@@ -41,12 +41,12 @@ const Editor = ({
     };
   };
   const handleImageRetrieval = async (url: string): Promise<any> => {
-    console.log('🚀 ~ handleImageRetrieval ~ url:', url);
     const { data } = await supabase.storage.from('post-image').getPublicUrl(url);
 
+    console.log('🚀 ~ handleImageRetrieval ~ data:', data);
     return {
       success: 1,
-      file: { url: data.publicUrl },
+      file: { url: data.publicUrl, name: url, size: 0 }, // size is not available for URL uploads
     };
   };
 
@@ -79,7 +79,10 @@ const Editor = ({
               },
             },
           },
-          imageResize: { class: ImageToolTune as BlockToolConstructable, config: { resize: true, crop: false } },
+          imageResize: {
+            class: ImageToolTune as BlockToolConstructable,
+            config: { resize: true, crop: false },
+          },
           list: {
             class: EditorjsList as any,
             inlineToolbar: true,
@@ -101,7 +104,9 @@ const Editor = ({
           console.log('Editor.js is ready');
         },
         async onChange(api) {
+          console.log('🚀 ~ onChange ~ api:', api);
           const data = await api.saver.save();
+          console.log('🚀 ~ onChange ~ data:', data.blocks[0].tunes);
           onChange(data);
         },
         data: data ? JSON.parse(data) : {},
@@ -111,7 +116,12 @@ const Editor = ({
     }
   }, []);
 
-  return <div className="shadow p-12 bg-gray-200 text-gray-800 rounded-lg" id={editorBlock} />;
+  return (
+    <div
+      className="shadow p-12 border border-gray-300 text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+      id={editorBlock}
+    />
+  );
 };
 
 export default memo(Editor);

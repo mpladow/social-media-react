@@ -3,7 +3,8 @@ import LoaderIcon from './LoaderIcon';
 
 type ButtonProps = {
   type: 'button' | 'submit' | 'reset';
-  colorClass: 'primary' | 'secondary' | 'danger';
+  variant?: 'text' | 'filled';
+  colorClass: 'primary' | 'secondary' | 'cancel' | 'danger';
   sizeClass: 'small' | 'medium' | 'large';
   loading?: boolean;
   onClick?: () => void;
@@ -13,6 +14,7 @@ const Button = ({
   type = 'button',
   colorClass,
   sizeClass,
+  variant = 'filled',
   onClick,
   loading,
   children,
@@ -25,6 +27,11 @@ const Button = ({
         return { classNames: 'bg-purple-500 text-white hover:bg-purple-600 transition-colors duration-200' };
       case 'secondary':
         return { classNames: 'bg-gray-500 text-white hover:bg-gray-600 transition-colors duration-200' };
+      case 'cancel':
+        return {
+          classNames:
+            'bg-gray-100 text-black ring-2 ring-slate-300 hover:bg-gray-200 transition-colors  duration-200 font-semibold',
+        };
       case 'danger':
         return { classNames: 'bg-red-500 text-white hover:bg-red-600 transition-colors duration-200' };
       default:
@@ -34,11 +41,19 @@ const Button = ({
   const sizeClasses = () => {
     switch (sizeClass) {
       case 'small':
-        return { classNames: 'px-2 py-1 text-sm' };
+        return { classNames: 'px-2 py-1 text-sm font-semibold' };
       case 'medium':
-        return { classNames: 'px-4 py-2 text-base' };
+        return { classNames: 'px-4 py-2 text-base font-semibold' };
       case 'large':
-        return { classNames: 'px-6 py-3 text-lg' };
+        return { classNames: 'px-6 py-3 text-lg font-semibold' };
+      default:
+        return { classNames: '' };
+    }
+  };
+  const variantClasses = () => {
+    switch (variant) {
+      case 'text':
+        return { classNames: 'bg-transparent text-blue-500 border-0 ring-0 hover:bg-opacity-75' };
       default:
         return { classNames: '' };
     }
@@ -50,7 +65,7 @@ const Button = ({
       type={type}
       className={`cursor-pointer rounded-lg ${
         disabled ? 'opacity-50 cursor-not-allowed transition duration-75 ease-in' : ''
-      } ${colorClasses().classNames} ${sizeClasses().classNames}`}
+      } ${colorClasses().classNames} ${sizeClasses().classNames} ${variantClasses().classNames}`}
       onClick={onClick}
     >
       <div className="flex items-center justify-center">
