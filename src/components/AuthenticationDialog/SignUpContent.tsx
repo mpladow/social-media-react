@@ -1,14 +1,12 @@
-import React from 'react';
-import DialogContent from './DialogContent';
-import Button from '../common/Button';
-import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../../context/AuthContext';
+import Button from '../common/Button';
 
 type SignUpContentProps = {
   onClose?: () => void;
 };
 const SignUpContent = ({ onClose }: SignUpContentProps) => {
-  const { user, signInWithGithub, signInWithEmail } = useAuth();
+  const { signInWithGithub } = useAuth();
   const navigate = useNavigate();
   const handleOnSignUpWithGithubPress = () => {
     onClose?.();

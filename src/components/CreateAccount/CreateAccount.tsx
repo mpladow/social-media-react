@@ -12,13 +12,7 @@ export type CreateAccountForm = {
   image?: File;
 };
 const CreateAccount = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-    setValue,
-  } = useForm<CreateAccountForm>();
+  const { register, handleSubmit, watch, setValue } = useForm<CreateAccountForm>();
 
   const { signUpWithEmail } = useAuth();
   const navigate = useNavigate();

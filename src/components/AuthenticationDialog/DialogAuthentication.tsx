@@ -7,7 +7,7 @@ type DialogAuthenticationProps = {
   onClose: () => void;
   displaySignInContent?: boolean;
 } & React.HTMLAttributes<HTMLDialogElement>;
-const DialogAuthentication = ({ onClose, displaySignInContent, ...rest }: DialogAuthenticationProps) => {
+const DialogAuthentication = ({ onClose, displaySignInContent }: DialogAuthenticationProps) => {
   //
 
   const handleClose = () => {

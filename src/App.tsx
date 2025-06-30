@@ -1,14 +1,14 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { Route, Routes } from 'react-router';
 import { Navbar } from './components/common/Navbar/Navbar';
-import { Home } from './pages/Home';
-import CreatePostPage from './pages/CreatePostPage';
-import Post from './pages/Post';
-import CreateGroupPage from './pages/CreateGroupPage';
-import GroupsPage from './pages/GroupsPage';
-import GroupPage from './pages/GroupPage';
-import EmailSignupPage from './pages/EmailSignupPage';
-import AboutPage from './pages/AboutPage';
 import SideNav from './components/SideNav/SideNav';
+import AboutPage from './pages/AboutPage';
+import CreateGroupPage from './pages/CreateGroupPage';
+import CreatePostPage from './pages/CreatePostPage';
+import EmailSignupPage from './pages/EmailSignupPage';
+import GroupPage from './pages/GroupPage';
+import GroupsPage from './pages/GroupsPage';
+import { Home } from './pages/Home';
+import Post from './pages/Post';
 function App() {
   return (
     <div className="w-full bg-gray-750 bg-gradient-to-b from-gray-800 to-black text-gray-100 transition-opacity duration-700 pt-16 overflow-y-hidden">
