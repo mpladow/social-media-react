@@ -62,9 +62,12 @@ const CommentItem = ({ postId, comment }: CommentItemProps) => {
             </span>
           </div>
           <div className="text-gray-300">{comment.content}</div>
-          <button className="text-blue-300 mt-4 cursor-pointer" onClick={() => setShowReply((prev) => !prev)}>
+          {user? (
+
+				 <button className="text-blue-300 mt-4 cursor-pointer" onClick={() => setShowReply((prev) => !prev)}>
             {showReply ? 'Cancel' : 'Reply'}
           </button>
+			) : (<p className='text-gray-600 mt-4'>You must be logged in to reply</p>)}
           {showReply && user && (
             <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col gap-4 mt-4">
               <textarea

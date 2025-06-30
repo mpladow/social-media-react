@@ -1,3 +1,4 @@
+import { isToday } from '../../../helpers/dates';
 import type { Post } from '../../../models/Post';
 import Avatar from '../../common/Avatar';
 
@@ -12,7 +13,13 @@ const PostItemFooter = ({ post }: PostItemFooterProps) => {
 
         <div className="flex flex-col">
           <span className="text-sm font-semibold">{post.created_by}</span>
-          <div className="text-sm">{post.created_at ? new Date(post.created_at).toLocaleDateString() : 'Unknown'}</div>
+          <div className="text-sm text-gray-500">
+            {post.created_at
+              ? isToday(new Date(post.created_at))
+                ? 'Today'
+                : new Date(post.created_at).toLocaleDateString()
+              : 'Unknown'}
+          </div>
         </div>
       </div>
     </div>

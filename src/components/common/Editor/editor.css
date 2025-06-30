@@ -1,19 +1,31 @@
 /* @import "tailwindcss/preflight"; */
 
-
 #editorjs-container {
   background-color: #f9f9f9;
   padding: 20px 30px;
   margin-bottom: 20px;
 }
 
+.ce-toolbar__actions {
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
 .ce-toolbar__content,
 .ce-block__content {
   max-width: unset;
+  color: #eaeaea;
   /* background-color: gray; */
   padding-left: 4px;
   padding-right: 4px;
 }
+/* .ce-toolbar__plus, .ce-toolbar__settings-btn {
+  color: white;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+} */
 
 .editorjs-codeFlask_Wrapper .editorjs-codeFlask_LangDisplay {
   max-width: unset;
@@ -35,7 +47,7 @@ input.ce-inline-tool-input {
 /* .cdx-block {
   background-color: pink;
 } */
- a.ce-paragraph {
+a.ce-paragraph {
   color: #2cd3ff;
   text-decoration: none;
 }
@@ -75,5 +87,5 @@ h4.ce-header {
 }
 ol.cdx-list,
 ul.cdx-list {
-  color: #333;
+  color: #eaeaea;
 }

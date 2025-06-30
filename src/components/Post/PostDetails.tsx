@@ -1,19 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '../../supabase-client';
-import type { Post } from '../../models/Post';
 import Avatar from '../common/Avatar';
 import LikeButton from './LikeButton';
 import CommentSection from './CommentSection';
 import type { OutputBlockData, OutputData } from '@editorjs/editorjs';
 import { editorJStoHTML } from '../../helpers/htmlRenderer';
-
-const fetchPostById = async (postId: number): Promise<Post> => {
-  const { data, error } = await supabase.from('posts').select('*').eq('id', postId).single();
-
-  if (error) throw new Error(error.message);
-
-  return data as Post;
-};
+import { fetchPostById } from '../../api/posts';
 
 const handleEditorJSRendering = (data: OutputBlockData) => {
   return editorJStoHTML(data);
@@ -44,8 +35,6 @@ const PostDetails = ({ postId }: { postId: number }) => {
       } catch {
         return data.content;
       }
-      // console.log('🚀 ~ renderContent ~ content:', content);
-      return '';
     } else {
       return '';
     }
@@ -54,7 +43,7 @@ const PostDetails = ({ postId }: { postId: number }) => {
   return (
     <div>
       {/* // page header */}
-      <div className="flex items-center  mb-8 justify-between p-20 bg-gradient-to-br from-indigo-800/80 to-purple-800/80 rounded-2xl shadow-lg">
+      <div className="flex items-center  mb-8 justify-between p-16 bg-gradient-to-br from-indigo-800/80 to-purple-800/80 rounded-2xl shadow-lg">
         <div className="flex flex-col w-screen max-w-5xl mx-auto  gap-4">
           <div>{new Date(data?.created_at ?? '').toLocaleDateString()}</div>
           <div>
@@ -74,8 +63,6 @@ const PostDetails = ({ postId }: { postId: number }) => {
         {/* <img src={data?.image_url} alt={data?.title} className="w-full rounded-[20px] object-cover h-100" /> */}
       </div>
       <div className="w-screen max-w-5xl mx-auto mt-8">
-        <label className="text-xl font-semibold mt-4 mb-4">Comments</label>
-
         <CommentSection postId={postId} />
       </div>
     </div>

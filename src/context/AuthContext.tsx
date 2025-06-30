@@ -1,12 +1,15 @@
 import type { User } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from 'react';
+import type { CreateAccountForm } from '../components/CreateAccount/CreateAccount';
 import { supabase } from '../supabase-client';
 
 interface AuthContextType {
   user: User | null;
   authMessage?: string;
   signInWithGithub: () => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  signUpWithEmail: (form: CreateAccountForm) => Promise<any>;
 }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -50,6 +53,29 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const signInWithGithub = async () => {
     supabase.auth.signInWithOAuth({ provider: 'github', options: { redirectTo: getURL() } });
   };
+  const signInWithEmail = async (email: string, password: string) => {
+    supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+  };
+  const signUpWithEmail = async (form: CreateAccountForm) => {
+    console.log('🚀 ~ signUpWithEmail ~ form:', form);
+    const { data, error } = await supabase.auth.signUp({
+      email: form.email,
+      password: form.password,
+      options: {
+        data: {
+          avatar_url: form.image ?? null,
+          preferred_username: form.username ?? null,
+        },
+      },
+    });
+    if (error) {
+      setAuthMessage(`Error signing up: ${error.message}`);
+    }
+    return data;
+  };
 
   const signOut = async () => {
     setUser(null);
@@ -57,7 +83,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, authMessage, signInWithGithub, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, authMessage, signInWithGithub, signInWithEmail, signOut, signUpWithEmail }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

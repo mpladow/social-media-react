@@ -82,7 +82,9 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
   }, [comments]);
 
   return (
-    <div className="max-w-5xl mx-auto pt-2">
+    <div className="max-w-5xl mx-auto mt-8">
+      <label className="text-xl font-semibold mt-4 mb-4">Comments</label>
+
       {user ? (
         <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col gap-4 mt-4">
           <textarea

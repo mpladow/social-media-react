@@ -9,6 +9,14 @@ export const fetchGroups = async (): Promise<GroupSchema[]> => {
 	return data;
 };
 
+export const fetchGroupByName = async (name: string): Promise<GroupSchema> => {
+  const { data, error } = await supabase.from('groups').select('*').eq('name', name).single();
+  if (error) {
+    throw new Error(error.message);
+  }
+  return data as GroupSchema;
+};
+
 export const fetchGroupsWithPostCount = async (): Promise<GroupWithPostsSchema[]> => {
 
 	const { data, error } = await supabase
