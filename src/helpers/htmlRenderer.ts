@@ -1,6 +1,5 @@
 import type { OutputBlockData } from '@editorjs/editorjs';
 import parse from 'html-react-parser';
-import { useMemo } from 'react';
 
 export const editorJStoHTML = (data: OutputBlockData) => {
   console.log('🚀 ~ editorJStoHTML ~ data:', data?.tunes?.imageResize);
@@ -37,7 +36,6 @@ export const editorJStoHTML = (data: OutputBlockData) => {
         cropperFrameHeight,
         cropperFrameLeft,
         cropperFrameTop,
-        cropperFrameWidth,
         cropperImageWidth,
         cropperImageHeight,
       } = data?.tunes?.imageResize;

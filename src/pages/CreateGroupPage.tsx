@@ -3,7 +3,7 @@ import CreateGroup from '../components/CreateGroup/CreateGroup';
 
 const CreateGroupPage = () => {
   return (
-    <div className="max-w-5xl mx-auto space-y-4 mt-8">
+	<div className="w-full mx-auto space-y-4 mt-8 flex flex-wrap max-w-5xl gap-6 flex-col px-6">
       <PageHeading title="Create Group" />
       <CreateGroup />
     </div>

@@ -1,9 +1,10 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 
-import DialogAuthentication from '../AuthenticationDialog/DialogAuthentication';
-import Button from './Button';
+import DialogAuthentication from '../../AuthenticationDialog/DialogAuthentication';
+import Button from '../Button';
+import DesktopAuthButtons from './DesktopAuthButtons';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -56,44 +57,15 @@ export const Navbar = () => {
               </Link>
             </div>
             {/*Desktop Authentication Buttons*/}
-            <div className="hidden lg:flex items-center min-w-[400px] max-w-[500px]">
-              {user !== null ? (
-                <div className="flex items-center space-x-4">
-                  {user.user_metadata?.avatar_url && (
-                    <img className="rounded-full h-8 w-8" src={user.user_metadata?.avatar_url} alt="User Avatar" />
-                  )}
-                  <span className="text-gray-100 mr-4">Welcome, {displayName}</span>
-                  <button
-                    onClick={handleSignOutPress}
-                    className="bg-amber-700 px-3 py-1 rounded text-gray-200 hover:text-white transition-colors cursor-pointer"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              ) : (
-                <div className="space-x-2">
-                  <Button
-                    onClick={handleSignInPress}
-                    className="bg-purple-400 px-3 py-1 rounded text-gray-200 hover:text-white cursor-pointer"
-                    type={'button'}
-                    variant="text"
-                    colorClass={'primary'}
-                    sizeClass={'small'}
-                  >
-                    Sign in
-                  </Button>
-                  <Button
-                    onClick={handleCreateAccountPress}
-                    className="bg-purple-400 px-3 py-1 rounded text-gray-200 hover:text-white cursor-pointer"
-                    type={'button'}
-                    colorClass={'primary'}
-                    sizeClass={'small'}
-                  >
-                    Create Account
-                  </Button>
-                </div>
-              )}
-            </div>
+            <DesktopAuthButtons
+              isSignedIn={user !== null}
+              avatar_url={user?.user_metadata?.avatar_url}
+              onSignoutPress={handleSignOutPress}
+              displayName={displayName}
+              onSignInPress={handleSignInPress}
+              onCreateAccountPress={handleCreateAccountPress}
+            />
+
             {/* Mobile Menu Button */}
             <div className="lg:hidden duration-300 ease-in-out">
               <button

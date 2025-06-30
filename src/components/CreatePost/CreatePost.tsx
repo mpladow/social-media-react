@@ -30,11 +30,13 @@ interface CreatePostForm {
 }
 
 const createPost = async (post: CreatePostForm) => {
+  console.log('🚀 ~ createPost ~ post:', post);
   // from = the table you want to insert into
   // data = success
   // 1. INSERT IMAGE
-  const filePath = `${post.title}-${Date.now()}-${post.image?.name}`;
-  if (post.image) {
+  const filePath = `${post.title}-${Date.now() + Math.random()}-${post.image?.name ?? 'image'}`;
+  if (post.image !== undefined) {
+    console.log('🚀 ~ createPost - should NOT be:', post.image);
     const { error: uploadError } = await supabase.storage.from('post-images').upload(filePath, post.image as File);
 
     if (uploadError) {
@@ -44,7 +46,10 @@ const createPost = async (post: CreatePostForm) => {
 
   // 2 CREATE POST DATA
   // get url
-  const { data: postImageData } = await supabase.storage.from('post-images').getPublicUrl(filePath);
+  const { data: postImageData } =
+    post.image !== undefined
+      ? await supabase.storage.from('post-images').getPublicUrl(filePath)
+      : { data: { publicUrl: undefined } };
   const postData: CreatePostSchema = {
     title: post.title,
     content: post.content,
@@ -53,6 +58,7 @@ const createPost = async (post: CreatePostForm) => {
     avatar_url: post.avatar_url ?? undefined, // Optional field for avatar URL
     group_id: post.group_id ?? undefined, // Optional field for group ID
   };
+  console.log('🚀 ~ createPost ~ postData:', postData);
 
   // 3. INSERT POST DATA
   const { data, error } = await supabase.from('posts').insert([postData]).select().single();
@@ -86,10 +92,10 @@ const CreatePost = () => {
 
   const onSubmit: SubmitHandler<CreatePostForm> = (data: CreatePostForm) => {
     // add user created data
+    data.group_id == '' ? (data.group_id = undefined) : data.group_id;
     data.created_by = user?.user_metadata.preferred_username || user?.user_metadata.email || 'Anonymous';
     data.avatar_url = user?.user_metadata.avatar_url || null;
     mutate(data);
-
     // Here you would typically send the form data to your backend or API
   };
   const onError = (error: any) => {
@@ -118,8 +124,11 @@ const CreatePost = () => {
     setValue('image', undefined);
   };
 
+  if (!user) {
+    return <div>You must be logged in to create a post.</div>;
+  }
   return (
-    <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4 pb-8">
       <div className={'flex flex-col'}>
         <label className="text-lg font-semibold mb-2">Title</label>
         <input
@@ -169,9 +178,9 @@ const CreatePost = () => {
         <select
           className="w-full border border-gray-300 p-2 rounded bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-500"
           {...register('group_id')}
-          defaultValue=""
+          defaultValue={''}
         >
-          <option className="text-gray-400" value="">
+          <option className="text-gray-400" value={''}>
             -- Select a group --
           </option>
           {groups?.map((group) => (
