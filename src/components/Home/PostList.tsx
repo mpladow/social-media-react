@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
 import { fetchPostsByGroupId } from '../../api/posts';
+import { useAuth } from '../../context/AuthContext';
 import type { Post } from '../../models/Post';
 import Button from '../common/Button';
 import PostItem from '../PostItem/PostItem';
 
 const PostList = ({ groupId }: { groupId?: number }) => {
+  const { role } = useAuth();
   const { data, error, isLoading } = useQuery<Post[], Error>({
     queryKey: ['posts'],
     queryFn: () => fetchPostsByGroupId(groupId!),
@@ -20,11 +22,13 @@ const PostList = ({ groupId }: { groupId?: number }) => {
     return (
       <div className="flex flex-col items-center justify-center w-full h-96 bg-gray-100/5 rounded-lg shadow-md gap-4">
         <p>{groupId ? 'There are no posts for this group.' : 'There are no posts.'}</p>
-        <Link to={'/create'}>
-          <Button type={'button'} colorClass={'primary'} sizeClass={'small'}>
-            Create Post
-          </Button>
-        </Link>
+        {role == 'admin' && (
+          <Link to={'/create'}>
+            <Button type={'button'} colorClass={'primary'} sizeClass={'small'}>
+              Create Post
+            </Button>
+          </Link>
+        )}
       </div>
     );
   }

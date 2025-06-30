@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import Avatar from '../common/Avatar';
-import LikeButton from './LikeButton';
-import CommentSection from './CommentSection';
 import type { OutputBlockData, OutputData } from '@editorjs/editorjs';
-import { editorJStoHTML } from '../../helpers/htmlRenderer';
+import { useQuery } from '@tanstack/react-query';
 import { fetchPostById } from '../../api/posts';
+import { editorJStoHTML } from '../../helpers/htmlRenderer';
+import Avatar from '../common/Avatar';
+import CommentSection from './CommentSection';
+import LikeButton from './LikeButton';
 
 const handleEditorJSRendering = (data: OutputBlockData) => {
   return editorJStoHTML(data);
@@ -41,7 +41,7 @@ const PostDetails = ({ postId }: { postId: number }) => {
   };
 
   return (
-    <div>
+    <div className="pb-12">
       {/* // page header */}
       <div className="flex items-center  mb-8 justify-between p-16 bg-gradient-to-br from-indigo-800/80 to-purple-800/80 rounded-2xl shadow-lg">
         <div className="flex flex-col w-screen max-w-5xl mx-auto  gap-4">

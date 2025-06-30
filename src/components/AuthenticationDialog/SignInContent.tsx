@@ -7,7 +7,7 @@ type SignInContentProps = {
   onClose?: () => void;
 };
 const SignInContent = ({ onClose }: SignInContentProps) => {
-  const { signInWithGithub, signInWithEmail } = useAuth();
+  const { signInWithGithub, signInWithEmail, authMessage } = useAuth();
   const { register, handleSubmit } = useForm();
 
   const handleOnSignInWithGithubPress = () => {
@@ -15,12 +15,17 @@ const SignInContent = ({ onClose }: SignInContentProps) => {
   };
 
   const handleClose = () => {
-    console.log('🚀 ~ handleClose ~ onClose:', onClose);
     onClose && onClose();
   };
 
-  const onSubmit = (data: any) => {
-    signInWithEmail(data.email, data.password);
+  const onSubmit = async (data: any) => {
+    const result = await signInWithEmail(data.email, data.password);
+    if (result !== null) {
+      console.log('Sign in successful:', result);
+      handleClose();
+    } else {
+      alert(authMessage);
+    }
   };
   const onError = (error: any) => {
     console.error('Error signing in:', error);
@@ -51,6 +56,7 @@ const SignInContent = ({ onClose }: SignInContentProps) => {
             className="w-full border border-gray-300 p-2 rounded bg-transparent focus:outline"
             type="password"
           />
+          {authMessage && <div className="text-red-500 text-sm">{authMessage}</div>}
           <div className="flex flex-row space-between justify-between items-center">
             <Button variant="text" type={'button'} colorClass={'cancel'} sizeClass={'medium'} onClick={handleClose}>
               Cancel

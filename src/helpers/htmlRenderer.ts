@@ -2,7 +2,6 @@ import type { OutputBlockData } from '@editorjs/editorjs';
 import parse from 'html-react-parser';
 
 export const editorJStoHTML = (data: OutputBlockData) => {
-  console.log('🚀 ~ editorJStoHTML ~ data:', data?.tunes?.imageResize);
 
   switch (data.type) {
     case 'paragraph':

@@ -7,7 +7,7 @@ import DesktopAuthButtons from './DesktopAuthButtons';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, role, signOut } = useAuth();
   const [openAuthenticationDialog, setOpenAuthenticationDialog] = useState(false);
   const [signUpClicked, setSignUpClicked] = useState(false);
   const displayName = user?.user_metadata.user_name || user?.email || 'Guest';
@@ -15,15 +15,13 @@ export const Navbar = () => {
   const handleSignInPress = () => {
     setSignUpClicked(false);
     setOpenAuthenticationDialog(true);
-    //  if (!dialogRef.current) {
-    //    return;
-    //  }
-    //  dialogRef.current.hasAttribute('open') ? dialogRef.current.close() : dialogRef.current.showModal();
   };
+
   const handleCreateAccountPress = () => {
     setSignUpClicked(true);
     setOpenAuthenticationDialog(true);
   };
+
   const handleSignOutPress = () => {
     signOut();
   };
@@ -42,15 +40,19 @@ export const Navbar = () => {
               <Link to={'/'} className="text-gray-200 hover:text-white transition-colors">
                 Home
               </Link>
-              <Link to={'/create'} className="text-gray-200 hover:text-white transition-colors">
-                Create Post
-              </Link>
+              {role === 'admin' && (
+                <Link to={'/create'} className="text-gray-200 hover:text-white transition-colors">
+                  Create Post
+                </Link>
+              )}
               <Link to={'/groups'} className="text-gray-200 hover:text-white transition-colors">
                 Groups
               </Link>
-              <Link to={'/groups/create'} className="text-gray-200 hover:text-white transition-colors">
-                Create Group
-              </Link>
+              {role === 'admin' && (
+                <Link to={'/groups/create'} className="text-gray-200 hover:text-white transition-colors">
+                  Create Group
+                </Link>
+              )}
               <Link to={'/about'} className="text-gray-200 hover:text-white transition-colors">
                 About
               </Link>

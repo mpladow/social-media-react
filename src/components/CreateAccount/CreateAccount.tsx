@@ -23,7 +23,7 @@ const CreateAccount = () => {
     if (result.error) {
       onError();
     } else {
-      navigate('/');
+      navigate('/created');
     }
   };
   const onError = () => {

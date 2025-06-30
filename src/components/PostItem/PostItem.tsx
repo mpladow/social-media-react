@@ -1,17 +1,16 @@
-import type { Post } from '../../models/Post';
-import { Link } from 'react-router';
-import PostItemFooter from './components/PostItemFooter';
-import parse from 'html-react-parser';
 import type { OutputData } from '@editorjs/editorjs';
+import parse from 'html-react-parser';
 import { BsChatFill } from 'react-icons/bs';
 import { IoIosThumbsUp } from 'react-icons/io';
+import { Link } from 'react-router';
+import type { Post } from '../../models/Post';
+import PostItemFooter from './components/PostItemFooter';
 
 interface PostItemProps {
   post: Post;
 }
 const PostItem = ({ post }: PostItemProps) => {
   const handleRenderContent = () => {
-    console.log('🚀 ~ handleRenderContent ~ post:', post);
     if (post && post.content) {
       try {
         const content: OutputData = JSON.parse(post.content);
