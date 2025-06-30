@@ -1,14 +1,13 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { useAuth } from '../../../context/AuthContext';
 
 import DialogAuthentication from '../../AuthenticationDialog/DialogAuthentication';
-import Button from '../Button';
 import DesktopAuthButtons from './DesktopAuthButtons';
 
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, signInWithGithub, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const [openAuthenticationDialog, setOpenAuthenticationDialog] = useState(false);
   const [signUpClicked, setSignUpClicked] = useState(false);
   const displayName = user?.user_metadata.user_name || user?.email || 'Guest';

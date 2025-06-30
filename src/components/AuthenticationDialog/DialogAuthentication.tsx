@@ -1,6 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import Button from '../common/Button';
+import React from 'react';
 import DialogContent from './DialogContent';
 import SignInContent from './SignInContent';
 import SignUpContent from './SignUpContent';
@@ -10,13 +8,7 @@ type DialogAuthenticationProps = {
   displaySignInContent?: boolean;
 } & React.HTMLAttributes<HTMLDialogElement>;
 const DialogAuthentication = ({ onClose, displaySignInContent, ...rest }: DialogAuthenticationProps) => {
-  const [showSignInContent, setShowSignInContent] = useState(displaySignInContent || false);
-  const { user, signInWithGithub, signOut } = useAuth();
-
-  const handleOnSignInWithGithubPress = () => {
-    signInWithGithub();
-  };
-  const handleSignInWithEmailPress = () => {};
+  //
 
   const handleClose = () => {
     onClose();
@@ -36,7 +28,7 @@ const DialogAuthentication = ({ onClose, displaySignInContent, ...rest }: Dialog
           className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
         >
           <DialogContent>
-            {showSignInContent ? <SignInContent onClose={handleClose} /> : <SignUpContent onClose={handleClose} />}
+            {displaySignInContent ? <SignInContent onClose={handleClose} /> : <SignUpContent onClose={handleClose} />}
           </DialogContent>
           {/* <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg shadow-lg max-w-4xl mx-auto my-auto">
 			<button

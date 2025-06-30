@@ -1,8 +1,7 @@
 import type { User } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from 'react';
-import { supabase } from '../supabase-client';
 import type { CreateAccountForm } from '../components/CreateAccount/CreateAccount';
-import Avatar from '../components/common/Avatar';
+import { supabase } from '../supabase-client';
 
 interface AuthContextType {
   user: User | null;

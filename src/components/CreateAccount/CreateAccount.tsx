@@ -1,8 +1,8 @@
-import React, { type ChangeEvent } from 'react';
+import { type ChangeEvent } from 'react';
 import { useForm } from 'react-hook-form';
-import Label from '../common/Label';
-import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router';
+import { useAuth } from '../../context/AuthContext';
+import Label from '../common/Label';
 
 export type CreateAccountForm = {
   username: string;

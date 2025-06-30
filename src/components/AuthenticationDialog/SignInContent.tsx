@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
-import DialogContent from './DialogContent';
-import Button from '../common/Button';
-import { useAuth } from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../context/AuthContext';
+import Button from '../common/Button';
 import Label from '../common/Label';
 
 type SignInContentProps = {
   onClose?: () => void;
 };
 const SignInContent = ({ onClose }: SignInContentProps) => {
-  const { user, signInWithGithub, signInWithEmail } = useAuth();
-  const [showLoginForm, setShowLoginForm] = useState(false);
+  const { signInWithGithub, signInWithEmail } = useAuth();
   const { register, handleSubmit } = useForm();
 
   const handleOnSignInWithGithubPress = () => {
     signInWithGithub();
   };
 
-  const handleSignInWithEmailPress = () => {
-    setShowLoginForm(true);
-  };
   const handleClose = () => {
     console.log('🚀 ~ handleClose ~ onClose:', onClose);
     onClose && onClose();

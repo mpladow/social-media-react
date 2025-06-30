@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import { useGroupsQuery } from '../../hooks/useGroupsQuery';
 import NavbarButton from '../common/NavbarButton';
 

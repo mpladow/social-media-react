@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Post } from '../../models/Post';
-import { supabase } from '../../supabase-client';
-import PostItem from '../PostItem/PostItem';
-import { fetchPosts, fetchPostsByGroupId } from '../../api/posts';
 import { Link } from 'react-router';
+import { fetchPostsByGroupId } from '../../api/posts';
+import type { Post } from '../../models/Post';
 import Button from '../common/Button';
+import PostItem from '../PostItem/PostItem';
 
 const PostList = ({ groupId }: { groupId?: number }) => {
   const { data, error, isLoading } = useQuery<Post[], Error>({
